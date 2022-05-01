@@ -3,6 +3,7 @@
     package="com.example.nfc">
 
     <uses-permission android:name="android.permission.NFC" />
+
     <uses-permission-sdk-23 android:name="android.permission.CAMERA" />
 
     <uses-feature android:name="android.hardware.nfc" />
@@ -17,7 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NFC">
         <activity
-            android:name=".presentation.activities.MainActivity"
+            android:name=".ui.activities.CaptureActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

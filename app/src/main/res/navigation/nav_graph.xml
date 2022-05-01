@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/scan"
-        android:name="com.example.nfc.presentation.scan.ScanFragment"
+        android:name="com.example.nfc.ui.scan.ScanFragment"
         android:label="@string/scan"
         tools:layout="@layout/fragment_scan" />
     <fragment
         android:id="@+id/history"
-        android:name="com.example.nfc.presentation.history.HistoryFragment"
+        android:name="com.example.nfc.ui.history.HistoryFragment"
         android:label="@string/history"
         tools:layout="@layout/fragment_history" />
 </navigation>

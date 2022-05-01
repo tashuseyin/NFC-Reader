@@ -1,4 +1,4 @@
-package com.example.nfc.presentation.history
+package com.example.nfc.ui.history
 
 import android.os.Bundle
 import android.view.LayoutInflater

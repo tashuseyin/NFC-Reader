@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_weight="6"
     android:orientation="vertical"
-    tools:context=".presentation.scan.ScanFragment">
+    tools:context=".ui.scan.ScanFragment">
 
     <com.airbnb.lottie.LottieAnimationView
         android:layout_width="match_parent"
@@ -39,7 +39,10 @@
             android:id="@+id/constraint_kimlik"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:padding="4dp"
             android:layout_margin="16dp"
+            android:background="@drawable/constraint_bg"
+            android:elevation="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/secim_text">
@@ -73,7 +76,10 @@
             android:id="@+id/constraint_pasaport"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:padding="4dp"
             android:layout_margin="16dp"
+            android:background="@drawable/constraint_bg"
+            android:elevation="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraint_kimlik">
@@ -105,6 +111,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_card"
+            android:padding="4dp"
+            android:background="@drawable/constraint_bg"
+            android:elevation="5dp"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="16dp"

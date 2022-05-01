@@ -1,11 +1,10 @@
-package com.example.nfc.presentation.scan
+package com.example.nfc.ui.scan
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.nfc.R
 import com.example.nfc.databinding.FragmentScanBinding
 
 
