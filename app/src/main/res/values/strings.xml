@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">NFC</string>
+    <string name="scan">Scan</string>
+    <string name="history">History</string>
+    <string name="secim">Seçiminizi belirleyin</string>
+    <string name="kimlik_kart">Kimlik Kartı</string>
+    <string name="pasaport">Pasaport</string>
+    <string name="kredi_kart">Kredi Kartı</string>
+    <string name="image">image</string>
+</resources>
