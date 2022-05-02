@@ -34,21 +34,24 @@ class ScanFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        cameraPermission()
         setListener()
     }
 
     private fun setListener() {
         binding.apply {
             constraintKimlik.setOnClickListener {
-                cameraPermission()
+                openCameraActivity(DocType.ID_CARD)
+            }
+            constraintPasaport.setOnClickListener {
+                openCameraActivity(DocType.PASSPORT)
             }
         }
     }
 
-    private fun openCameraActivity() {
+    private fun openCameraActivity(docType: DocType) {
         val intent = Intent(requireActivity(), CaptureActivity::class.java)
-        intent.putExtra(DOC_TYPE, DocType.ID_CARD)
+        intent.putExtra(DOC_TYPE, docType)
         startActivity(intent)
     }
 
@@ -56,9 +59,7 @@ class ScanFragment : Fragment() {
         Dexter.withContext(context)
             .withPermission(Manifest.permission.CAMERA)
             .withListener(object : PermissionListener {
-                override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
-                    openCameraActivity()
-                }
+                override fun onPermissionGranted(p0: PermissionGrantedResponse?) {}
 
                 override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
                     Toast.makeText(

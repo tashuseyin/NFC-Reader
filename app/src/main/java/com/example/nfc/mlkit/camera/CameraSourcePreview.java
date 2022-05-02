@@ -14,7 +14,9 @@ import com.google.android.gms.common.images.Size;
 
 import java.io.IOException;
 
-/** Preview the camera image in the screen. */
+/**
+ * Preview the camera image in the screen.
+ */
 public class CameraSourcePreview extends ViewGroup {
     private static final String TAG = "MIDemoApp:Preview";
 
@@ -106,7 +108,8 @@ public class CameraSourcePreview extends ViewGroup {
         }
 
         @Override
-        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
+        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        }
     }
 
     @Override

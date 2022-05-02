@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
-
 import com.example.nfc.mlkit.other.GraphicOverlay;
 import com.google.mlkit.vision.text.Text;
 
@@ -45,7 +44,9 @@ public class TextGraphic extends GraphicOverlay.Graphic {
         postInvalidate();
     }
 
-    /** Draws the text block annotations for position, size, and raw value on the supplied canvas. */
+    /**
+     * Draws the text block annotations for position, size, and raw value on the supplied canvas.
+     */
     @Override
     public void draw(Canvas canvas) {
         if (text == null) {
