@@ -55,6 +55,7 @@ dependencies {
     implementation 'com.madgag.spongycastle:prov:1.58.0.0'
     implementation 'edu.ucar:jj2000:5.2'
     implementation 'com.github.mhshams:jnbis:2.0.2'
+    implementation 'com.gemalto.wsq:wsq-android:1.2'
 
     implementation 'com.google.android.gms:play-services-mlkit-text-recognition:16.3.0'
 
