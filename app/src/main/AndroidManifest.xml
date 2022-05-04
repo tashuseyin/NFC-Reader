@@ -3,6 +3,7 @@
     package="com.example.nfc">
 
     <uses-permission android:name="android.permission.NFC" />
+
     <uses-permission-sdk-23 android:name="android.permission.CAMERA" />
 
     <uses-feature android:name="android.hardware.nfc" />
@@ -17,6 +18,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NFC">
         <activity
+            android:name=".ui.activities.ResultActivity"
+            android:exported="false"
+            android:label="@string/title_activity_result"
+            android:theme="@style/Theme.NFC.NoActionBar" />
+        <activity
             android:name=".ui.activities.CaptureActivity"
             android:exported="false" />
         <activity
@@ -24,11 +30,12 @@
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="ocr" />

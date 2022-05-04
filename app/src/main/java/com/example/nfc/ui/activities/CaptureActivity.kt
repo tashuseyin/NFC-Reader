@@ -17,6 +17,7 @@ import com.example.nfc.model.DocType
 import org.jmrtd.lds.icao.MRZInfo
 import java.io.IOException
 
+
 class CaptureActivity : AppCompatActivity(), TextRecognitionProcessor.ResultListener {
 
     private var cameraSource: CameraSource? = null
@@ -94,6 +95,7 @@ class CaptureActivity : AppCompatActivity(), TextRecognitionProcessor.ResultList
         val returnIntent = Intent()
         returnIntent.putExtra(MRZ_RESULT, mrzInfo)
         setResult(Activity.RESULT_OK, returnIntent)
+        startActivity(Intent(this,ResultActivity::class.java))
         finish()
     }
 
