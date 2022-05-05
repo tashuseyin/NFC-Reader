@@ -62,6 +62,7 @@ class CaptureActivity : AppCompatActivity(), TextRecognitionProcessor.ResultList
 
     override fun onDestroy() {
         super.onDestroy()
+        cameraSource?.stop()
     }
 
     private fun createCameraSource() {
