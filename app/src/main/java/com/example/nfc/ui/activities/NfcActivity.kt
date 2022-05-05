@@ -11,7 +11,5 @@ class NfcActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nfc)
 
-        val data = intent.getSerializableExtra(Constant.MRZ_RESULT)
-        print(data)
     }
 }

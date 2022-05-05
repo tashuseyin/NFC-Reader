@@ -1,14 +1,13 @@
 package com.example.nfc.ui.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.nfc.R
 import com.example.nfc.common.Constant.Companion.DOC_TYPE
 import com.example.nfc.common.Constant.Companion.MRZ_RESULT
+import com.example.nfc.databinding.ActivityCaptureBinding
 import com.example.nfc.mlkit.camera.CameraSource
 import com.example.nfc.mlkit.camera.CameraSourcePreview
 import com.example.nfc.mlkit.other.GraphicOverlay
@@ -20,28 +19,30 @@ import java.io.IOException
 
 class CaptureActivity : AppCompatActivity(), TextRecognitionProcessor.ResultListener {
 
+    private lateinit var binding: ActivityCaptureBinding
     private var cameraSource: CameraSource? = null
     private var preview: CameraSourcePreview? = null
     private var graphicOverlay: GraphicOverlay? = null
-
+    private var isSuccess = false
 
     private var docType = DocType.OTHER
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_capture)
+        binding = ActivityCaptureBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         if (intent.hasExtra(DOC_TYPE)) {
             docType = intent.getSerializableExtra(DOC_TYPE) as DocType
             if (docType == DocType.PASSPORT) {
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
             }
         }
-        preview = findViewById(R.id.camera_source_preview)
+        preview = binding.cameraSourcePreview
         if (preview == null) {
             Log.d("TAG", "Preview is null")
         }
-        graphicOverlay = findViewById(R.id.graphics_overlay)
+        graphicOverlay = binding.graphicsOverlay
         if (graphicOverlay == null) {
             Log.d("TAG", "graphicOverlay is null")
         }
@@ -55,6 +56,7 @@ class CaptureActivity : AppCompatActivity(), TextRecognitionProcessor.ResultList
         startCameraSource()
     }
 
+    /** Stops the camera.  */
     override fun onPause() {
         super.onPause()
         preview!!.stop()
@@ -62,7 +64,9 @@ class CaptureActivity : AppCompatActivity(), TextRecognitionProcessor.ResultList
 
     override fun onDestroy() {
         super.onDestroy()
-        cameraSource?.stop()
+        if (cameraSource != null) {
+            cameraSource!!.stop()
+        }
     }
 
     private fun createCameraSource() {
@@ -92,12 +96,17 @@ class CaptureActivity : AppCompatActivity(), TextRecognitionProcessor.ResultList
     }
 
     override fun onSuccess(mrzInfo: MRZInfo?) {
-        startActivity(Intent(this, NfcActivity::class.java).putExtra(MRZ_RESULT, mrzInfo))
-        finish()
+        if (!isSuccess) {
+            isSuccess = true
+            startActivity(Intent(this, NfcActivity::class.java).putExtra(MRZ_RESULT, mrzInfo))
+        } else {
+            finish()
+        }
     }
 
     override fun onError(exp: Exception?) {
-        setResult(Activity.RESULT_CANCELED)
+        setResult(RESULT_CANCELED)
         finish()
     }
+
 }
