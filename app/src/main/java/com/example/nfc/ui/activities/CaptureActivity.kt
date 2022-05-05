@@ -62,7 +62,6 @@ class CaptureActivity : AppCompatActivity(), TextRecognitionProcessor.ResultList
 
     override fun onDestroy() {
         super.onDestroy()
-        cameraSource!!.stop()
     }
 
     private fun createCameraSource() {
@@ -92,10 +91,7 @@ class CaptureActivity : AppCompatActivity(), TextRecognitionProcessor.ResultList
     }
 
     override fun onSuccess(mrzInfo: MRZInfo?) {
-        val returnIntent = Intent()
-        returnIntent.putExtra(MRZ_RESULT, mrzInfo)
-        setResult(Activity.RESULT_OK, returnIntent)
-        startActivity(Intent(this,ResultActivity::class.java))
+        startActivity(Intent(this, ResultActivity::class.java).putExtra(MRZ_RESULT, mrzInfo))
         finish()
     }
 
