@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NFC">
         <activity
-            android:name=".ui.activities.ResultActivity"
+            android:name=".ui.activities.NfcActivity"
             android:exported="false"
             android:label="@string/title_activity_result"
             android:theme="@style/Theme.NFC.NoActionBar" />

@@ -91,7 +91,7 @@ class CaptureActivity : AppCompatActivity(), TextRecognitionProcessor.ResultList
     }
 
     override fun onSuccess(mrzInfo: MRZInfo?) {
-        startActivity(Intent(this, ResultActivity::class.java).putExtra(MRZ_RESULT, mrzInfo))
+        startActivity(Intent(this, NfcActivity::class.java).putExtra(MRZ_RESULT, mrzInfo))
         finish()
     }
 
