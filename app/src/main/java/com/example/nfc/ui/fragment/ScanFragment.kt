@@ -1,6 +1,5 @@
 package com.example.nfc.ui.fragment
 
-import android.app.Dialog
 import android.app.PendingIntent
 import android.content.Intent
 import android.nfc.NfcAdapter
@@ -8,10 +7,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import com.example.nfc.R
+import androidx.navigation.fragment.findNavController
 import com.example.nfc.common.Constant
 import com.example.nfc.databinding.FragmentScanBinding
 import com.example.nfc.ui.activities.NfcActivity
@@ -40,7 +37,6 @@ class ScanFragment : Fragment() {
 
         setNfc()
         readCard()
-        setListener()
     }
 
     private fun setNfc() {
@@ -51,33 +47,6 @@ class ScanFragment : Fragment() {
                 .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
             0
         )
-    }
-
-    private fun checkViewControl(scanBool: Boolean, cancelBool: Boolean, progressBarBool: Boolean) {
-        binding.apply {
-            progressbar.isVisible = progressBarBool
-            buttonCancel.isVisible = cancelBool
-            buttonScan.isVisible = scanBool
-        }
-    }
-
-    private fun setListener() {
-        binding.apply {
-            buttonScan.setOnClickListener {
-                if (adapter!!.isEnabled) {
-                    checkViewControl(scanBool = false, progressBarBool = true, cancelBool = true)
-                } else {
-                    checkViewControl(scanBool = true, cancelBool = false, progressBarBool = false)
-                    viewAlertDialog()
-                }
-            }
-            buttonCancel.setOnClickListener {
-                if (adapter != null) {
-                    adapter!!.disableForegroundDispatch(requireActivity())
-                }
-                checkViewControl(scanBool = true, progressBarBool = false, cancelBool = false)
-            }
-        }
     }
 
 
@@ -96,19 +65,15 @@ class ScanFragment : Fragment() {
         setMrzData(mrzInfo)
     }
 
-    private fun viewAlertDialog() {
-        val alertDialogBinding = layoutInflater.inflate(R.layout.custom_dialog, null)
-        val alertDialog = Dialog(requireContext())
-        alertDialog.setContentView(alertDialogBinding)
-        alertDialog.setCancelable(true)
-        alertDialog.show()
 
-        val buttonOk = alertDialogBinding.findViewById<Button>((R.id.ok))
-        buttonOk.setOnClickListener {
-            alertDialog.dismiss()
-        }
+    private fun nfcScan() {
+        val eDocument = NFCUtil.readNfcData(requireContext())
+        findNavController().navigate(
+            ScanFragmentDirections.actionScanFragmentToResultFragment(
+                eDocument
+            )
+        )
     }
-
 
 
     override fun onResume() {
@@ -117,6 +82,7 @@ class ScanFragment : Fragment() {
             adapter!!.enableForegroundDispatch(requireActivity(), pendingIntent, null, null)
         }
     }
+
 
     override fun onPause() {
         super.onPause()

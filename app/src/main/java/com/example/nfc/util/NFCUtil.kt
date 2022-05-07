@@ -4,13 +4,10 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.nfc.tech.IsoDep
 import android.util.Log
-import android.view.View
-import androidx.navigation.Navigation
 import com.example.nfc.model.AdditionalPersonDetails
 import com.example.nfc.model.DocType
 import com.example.nfc.model.EDocument
 import com.example.nfc.model.PersonDetails
-import com.example.nfc.ui.fragment.ScanFragmentDirections
 import net.sf.scuba.smartcards.CardService
 import org.jmrtd.BACKeySpec
 import org.jmrtd.PassportService
@@ -34,7 +31,7 @@ object NFCUtil {
     private var signatureImageBase64: String? = null
     private var fingerprints: MutableList<Bitmap?> = arrayListOf()
 
-    fun readNfcData(context: Context, view: View) {
+    fun readNfcData(context: Context): EDocument {
         val isoDep: IsoDep? = null
         val bacKey: BACKeySpec? = null
         var docType: DocType = DocType.OTHER
@@ -232,11 +229,9 @@ object NFCUtil {
                 personalNationality,
                 personalIssuerAuthority,
             )
-            val eDocument = EDocument(docType, personDetails, additionalPersonDetails, docPublicKey)
-            Navigation.findNavController(view)
-                .navigate(ScanFragmentDirections.actionScanFragmentToResultFragment(eDocument))
         } catch (e: Exception) {
             Log.w("TAG", e)
         }
+        return EDocument(docType, personDetails, additionalPersonDetails, docPublicKey)
     }
 }
