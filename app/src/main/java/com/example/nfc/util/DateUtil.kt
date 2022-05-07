@@ -6,7 +6,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DateUtil {
+object DateUtil {
     /**Date**/
     fun stringToDate(dateStr: String?, dateFormat: DateFormat): Date? {
         var date: Date? = null

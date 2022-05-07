@@ -24,4 +24,5 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="cancel">Cancel</string>
     <string name="card_number">Card Number</string>
+    <string name="nfc_description">Cihazı okutacağınız kart/pasaport üzerine koyun ve hareket ettirmeyin.</string>
 </resources>

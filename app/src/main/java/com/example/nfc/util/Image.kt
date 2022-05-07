@@ -2,7 +2,7 @@ package com.example.nfc.util
 
 import android.graphics.Bitmap
 
-class Image {
+object Image {
 
     /** Image **/
     private var bitmapImage: Bitmap? = null

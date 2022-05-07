@@ -1,74 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="7"
-    android:orientation="vertical"
+    android:layout_margin="10dp"
     tools:context=".ui.fragment.ScanFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/lottie_animation"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/nfc"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/card_number"
-            android:layout_width="match_parent"
+            android:id="@+id/date_of_birth"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
             android:textColor="@color/black"
             android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lottie_animation"
+            app:layout_constraintTop_toBottomOf="@+id/document_number"
+            tools:text="Date Of Birth: 000203" />
+
+        <TextView
+            android:id="@+id/expiry_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lottie_animation"
+            app:layout_constraintTop_toBottomOf="@+id/date_of_birth"
+            tools:text="Expiry Date: 280401" />
+
+        <TextView
+            android:id="@+id/document_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="4dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lottie_animation"
+            app:layout_constraintTop_toTopOf="@+id/lottie_animation"
+            tools:text="Doc Number: A10U36800" />
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:layout_marginTop="8dp"
+            android:visibility="invisible"
+            android:indeterminateTint="@color/purple_500"
+            app:layout_constraintBottom_toTopOf="@+id/description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/card_number" />
+            app:layout_constraintTop_toBottomOf="@+id/lottie_animation" />
 
         <TextView
-            android:id="@+id/expiration_date"
+            android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_number"
-            tools:text="Expiration Date" />
-
-        <TextView
-            android:id="@+id/birth_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:textColor="@color/black"
-            android:textSize="16sp"
+            android:layout_marginTop="32dp"
+            android:text="@string/nfc_description"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/expiration_date"
-            tools:text="Birth Date" />
+            app:layout_constraintTop_toBottomOf="@+id/lottie_animation" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottie_animation"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4"
-        app:lottie_autoPlay="false"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/nfc_animation" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
         <Button
             android:id="@+id/button_scan"
@@ -98,4 +133,4 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

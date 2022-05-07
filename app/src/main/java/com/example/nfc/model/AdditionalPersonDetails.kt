@@ -1,20 +1,24 @@
 package com.example.nfc.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class AdditionalPersonDetails(
-    var custodyInformation: String,
-    var fullDateOfBirth: String,
-    var nameOfHolder: String,
-    var otherNames: List<String>,
-    var otherValidTDNumbers: List<String>,
-    var permanentAddress: List<String>,
-    var personalNumber: String,
-    var personalSummary: String,
-    var placeOfBirth: List<String>,
-    var profession: String,
-    var proofOfCitizenship: List<ByteArray>,
+    var custodyInformation: String? = null,
+    var fullDateOfBirth: String? = null,
+    var nameOfHolder: String? = null,
+    var otherNames: List<String>? = null,
+    var otherValidTDNumbers: List<String>? = null,
+    var permanentAddress: List<String>? = null,
+    var personalNumber: String? = null,
+    var personalSummary: String? = null,
+    var placeOfBirth: List<String>? = null,
+    var profession: String? = null,
+    var proofOfCitizenship: List<ByteArray>? = null,
     var tag: Int = 0,
-    var tagPresenceList: List<Int>,
-    var telephone: String,
-    var title: String
-)
+    var tagPresenceList: List<Int>? = null,
+    var telephone: String? = null,
+    var title: String? = null
+): Parcelable
 
