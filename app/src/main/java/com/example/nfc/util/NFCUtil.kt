@@ -20,6 +20,7 @@ import java.security.PublicKey
 
 object NFCUtil {
 
+
     private var additionalPersonDetails = AdditionalPersonDetails()
     private var personDetails = PersonDetails()
     private var docPublicKey: PublicKey? = null
@@ -31,7 +32,7 @@ object NFCUtil {
     private var signatureImageBase64: String? = null
     private var fingerprints: MutableList<Bitmap?> = arrayListOf()
 
-    fun readNfcData(context: Context): EDocument {
+    fun readNfcData(context: Context) {
         val isoDep: IsoDep? = null
         val bacKey: BACKeySpec? = null
         var docType: DocType = DocType.OTHER
@@ -232,6 +233,6 @@ object NFCUtil {
         } catch (e: Exception) {
             Log.w("TAG", e)
         }
-        return EDocument(docType, personDetails, additionalPersonDetails, docPublicKey)
+        EDocument(docType, personDetails, additionalPersonDetails, docPublicKey)
     }
 }

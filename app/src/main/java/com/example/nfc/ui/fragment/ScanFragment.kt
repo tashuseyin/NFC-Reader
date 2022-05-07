@@ -1,5 +1,6 @@
 package com.example.nfc.ui.fragment
 
+import android.app.Dialog
 import android.app.PendingIntent
 import android.content.Intent
 import android.nfc.NfcAdapter
@@ -7,22 +8,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import com.example.nfc.R
 import com.example.nfc.common.Constant
 import com.example.nfc.databinding.FragmentScanBinding
 import com.example.nfc.ui.activities.NfcActivity
-import com.example.nfc.util.NFCUtil
 import org.jmrtd.lds.icao.MRZInfo
 
 
 class ScanFragment : Fragment() {
-
     private var _binding: FragmentScanBinding? = null
     private val binding get() = _binding!!
     private var adapter: NfcAdapter? = null
     private var pendingIntent: PendingIntent? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,20 +34,24 @@ class ScanFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         setNfc()
         readCard()
     }
 
     private fun setNfc() {
         adapter = NfcAdapter.getDefaultAdapter(requireActivity())
+
+        if (!adapter!!.isEnabled) {
+            viewAlertDialog()
+        }
+
         pendingIntent = PendingIntent.getActivity(
-            requireActivity(), 0,
+            context, 0,
             Intent(requireActivity(), NfcActivity::class.java)
-                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
-            0
+                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0
         )
     }
-
 
     private fun setMrzData(mrzInfo: MRZInfo) {
         val docNumber = "Doc Number:" + mrzInfo.documentNumber
@@ -66,13 +69,17 @@ class ScanFragment : Fragment() {
     }
 
 
-    private fun nfcScan() {
-        val eDocument = NFCUtil.readNfcData(requireContext())
-        findNavController().navigate(
-            ScanFragmentDirections.actionScanFragmentToResultFragment(
-                eDocument
-            )
-        )
+    private fun viewAlertDialog() {
+        val alertDialogBinding = layoutInflater.inflate(R.layout.custom_dialog, null)
+        val alertDialog = Dialog(requireContext())
+        alertDialog.setContentView(alertDialogBinding)
+        alertDialog.setCancelable(true)
+        alertDialog.show()
+
+        val buttonOk = alertDialogBinding.findViewById<Button>((R.id.ok))
+        buttonOk.setOnClickListener {
+            alertDialog.dismiss()
+        }
     }
 
 
@@ -95,4 +102,6 @@ class ScanFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }
