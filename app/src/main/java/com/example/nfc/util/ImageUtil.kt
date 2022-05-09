@@ -1,120 +1,88 @@
 package com.example.nfc.util
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.util.Base64
-import jj2000.j2k.decoder.Decoder
-import jj2000.j2k.util.ParameterList
-import org.jmrtd.lds.AbstractImageInfo
+import android.graphics.*
+import android.media.Image
 import org.jnbis.internal.WsqDecoder
 import java.io.*
 
 object ImageUtil {
-    fun getImage(context: Context?, imageInfo: AbstractImageInfo): Image {
-        val image = Image
-        val imageLength = imageInfo.imageLength
-        val dataInputStream = DataInputStream(imageInfo.imageInputStream)
-        val buffer = ByteArray(imageLength)
-        try {
-            dataInputStream.readFully(buffer, 0, imageLength)
-            val inputStream: InputStream = ByteArrayInputStream(buffer, 0, imageLength)
-            val bitmapImage: Bitmap = context?.let {
-                ImageUtil.decodeImage(
-                    it,
-                    imageInfo.mimeType,
-                    inputStream
-                )
-            }!!
-            image.setBitmapImage(bitmapImage)
-            val base64Image = Base64.encodeToString(buffer, Base64.DEFAULT)
-            image.setBase64Image(base64Image)
-        } catch (e: IOException) {
-            e.printStackTrace()
+
+    private val TAG = ImageUtil::class.java.simpleName
+
+    var JPEG_MIME_TYPE = "image/jpeg"
+    var JPEG2000_MIME_TYPE = "image/jp2"
+    var JPEG2000_ALT_MIME_TYPE = "image/jpeg2000"
+    var WSQ_MIME_TYPE = "image/x-wsq"
+
+    fun imageToByteArray(image: Image): ByteArray? {
+        var data: ByteArray? = null
+        if (image.format == ImageFormat.JPEG) {
+            val planes = image.planes
+            val buffer = planes[0].buffer
+            data = ByteArray(buffer.capacity())
+            buffer.get(data)
+            return data
+        } else if (image.format == ImageFormat.YUV_420_888) {
+            data = NV21toJPEG(
+                YUV_420_888toNV21(image),
+                image.width, image.height
+            )
         }
-        return image
+        return data
     }
 
-    fun scaleImage(bitmap: Bitmap?): Bitmap? {
-        var bitmapImage: Bitmap? = null
-        if (bitmap != null) {
-            val ratio = 400.0 / bitmap.height
-            val targetHeight = (bitmap.height * ratio).toInt()
-            val targetWidth = (bitmap.width * ratio).toInt()
-            bitmapImage = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false)
-        }
-        return bitmapImage
+    fun YUV_420_888toNV21(image: Image): ByteArray {
+        val nv21: ByteArray
+        val yBuffer = image.planes[0].buffer
+        val uBuffer = image.planes[1].buffer
+        val vBuffer = image.planes[2].buffer
+
+        val ySize = yBuffer.remaining()
+        val uSize = uBuffer.remaining()
+        val vSize = vBuffer.remaining()
+
+        nv21 = ByteArray(ySize + uSize + vSize)
+
+        //U and V are swapped
+        yBuffer.get(nv21, 0, ySize)
+        vBuffer.get(nv21, ySize, vSize)
+        uBuffer.get(nv21, ySize + vSize, uSize)
+
+        return nv21
     }
+
+    private fun NV21toJPEG(nv21: ByteArray, width: Int, height: Int): ByteArray {
+        val out = ByteArrayOutputStream()
+        val yuv = YuvImage(nv21, ImageFormat.NV21, width, height, null)
+        yuv.compressToJpeg(Rect(0, 0, width, height), 100, out)
+        return out.toByteArray()
+    }
+
+
+    /* IMAGE DECODIFICATION METHODS */
+
 
     @Throws(IOException::class)
-    fun decodeImage(context: Context, mimeType: String, inputStream: InputStream): Bitmap? {
-        return if (mimeType.equals(
-                "image/jp2",
+    fun decodeImage(inputStream: InputStream, imageLength: Int, mimeType: String): Bitmap {
+        var inputStream = inputStream
+        /* DEBUG */
+        synchronized(inputStream) {
+            val dataIn = DataInputStream(inputStream)
+            val bytes = ByteArray(imageLength)
+            dataIn.readFully(bytes)
+            inputStream = ByteArrayInputStream(bytes)
+        }
+        /* END DEBUG */
+
+        if (JPEG2000_MIME_TYPE.equals(mimeType, ignoreCase = true) || JPEG2000_ALT_MIME_TYPE.equals(
+                mimeType,
                 ignoreCase = true
-            ) || mimeType.equals("image/jpeg2000", ignoreCase = true)
-        ) {
-
-            // Save jp2 file
-            val output: OutputStream = FileOutputStream(File(context.cacheDir, "temp.jp2"))
-            val buffer = ByteArray(1024)
-            var read: Int
-            while (inputStream.read(buffer).also { read = it } != -1) {
-                output.write(buffer, 0, read)
-            }
-            output.close()
-
-            // Decode jp2 file
-            val pinfo = Decoder.getAllParameters()
-            val parameters: ParameterList
-            val defaults: ParameterList = ParameterList()
-            for (i in pinfo.indices.reversed()) {
-                if (pinfo[i][3] != null) {
-                    defaults[pinfo[i][0]] = pinfo[i][3]
-                }
-            }
-            parameters = ParameterList(defaults)
-            parameters.setProperty("rate", "3")
-            parameters.setProperty("o", context.cacheDir.toString() + "/temp.ppm")
-            parameters.setProperty("debug", "on")
-            parameters.setProperty("i", context.cacheDir.toString() + "/temp.jp2")
-            val decoder = Decoder(parameters)
-            decoder.run()
-
-            // Read ppm file
-            val reader = BufferedInputStream(
-                FileInputStream(File(context.cacheDir.toString() + "/temp.ppm"))
             )
-            if (reader.read() != 'P'.toInt() || reader.read() != '6'.toInt()) return null
-            reader.read()
-            var widths = ""
-            var heights = ""
-            var temp: Char
-            while ((reader.read().toChar().also { temp = it }) != ' ') widths += temp
-            while ((reader.read().toChar()
-                    .also { temp = it }) >= '0' && temp <= '9'
-            ) heights += temp
-            if (reader.read() != '2'.toInt() || reader.read() != '5'.toInt() || reader.read() != '5'.toInt()) return null
-            reader.read()
-            val width = Integer.valueOf(widths)
-            val height = Integer.valueOf(heights)
-            val colors = IntArray(width * height)
-            val pixel = ByteArray(3)
-            var len: Int
-            var cnt = 0
-            var total = 0
-            val rgb = IntArray(3)
-            while (reader.read(pixel).also { len = it } > 0) {
-                for (i in 0 until len) {
-                    rgb[cnt] = if (pixel[i] >= 0) pixel[i].toInt() else pixel[i] + 255
-                    if (++cnt == 3) {
-                        cnt = 0
-                        colors[total++] = Color.rgb(rgb[0], rgb[1], rgb[2])
-                    }
-                }
-            }
-            Bitmap.createBitmap(colors, width, height, Bitmap.Config.ARGB_8888)
-        } else if (mimeType.equals("image/x-wsq", ignoreCase = true)) {
+        ) {
+            val bitmap = org.jmrtd.jj2000.JJ2000Decoder.decode(inputStream)
+            return toAndroidBitmap(bitmap)
+        } else if (WSQ_MIME_TYPE.equals(mimeType, ignoreCase = true)) {
+            //org.jnbis.Bitmap bitmap = WSQDecoder.decode(inputStream);
             val wsqDecoder = WsqDecoder()
             val bitmap = wsqDecoder.decode(inputStream.readBytes())
             val byteData = bitmap.pixels
@@ -123,7 +91,7 @@ object ImageUtil {
                 intData[j] =
                     -0x1000000 or ((byteData[j].toInt() and 0xFF) shl 16) or ((byteData[j].toInt() and 0xFF) shl 8) or (byteData[j].toInt() and 0xFF)
             }
-            Bitmap.createBitmap(
+            return Bitmap.createBitmap(
                 intData,
                 0,
                 bitmap.width,
@@ -131,8 +99,30 @@ object ImageUtil {
                 bitmap.height,
                 Bitmap.Config.ARGB_8888
             )
+            //return toAndroidBitmap(bitmap);
         } else {
-            BitmapFactory.decodeStream(inputStream)
+            return BitmapFactory.decodeStream(inputStream)
         }
+    }
+
+    fun rotateBitmap(source: Bitmap, angle: Float): Bitmap {
+        val matrix = Matrix()
+        matrix.postRotate(angle)
+        return Bitmap.createBitmap(source, 0, 0, source.width, source.height, matrix, true)
+    }
+
+    /* ONLY PRIVATE METHODS BELOW */
+
+    private fun toAndroidBitmap(bitmap: org.jmrtd.jj2000.Bitmap): Bitmap {
+        val intData = bitmap.pixels
+        return Bitmap.createBitmap(
+            intData,
+            0,
+            bitmap.width,
+            bitmap.width,
+            bitmap.height,
+            Bitmap.Config.ARGB_8888
+        )
+
     }
 }

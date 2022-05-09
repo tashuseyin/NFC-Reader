@@ -25,4 +25,8 @@
     <string name="cancel">Cancel</string>
     <string name="card_number">Card Number</string>
     <string name="nfc_description">Cihazı okutacağınız kart/pasaport üzerine koyun ve hareket ettirmeyin.</string>
+    <string name="valid_passport">Valid Passport</string>
+    <string name="the_passport_chip_and_content_are_valid">The passport chip and content are valid</string>
+    <string name="tc_kimlik">TÜRKİYE CUMHURİYETİ KİMLİK KARTI</string>
+    <string name="republic">REPUBLIC OF TURKEY IDENTITY CARD</string>
 </resources>

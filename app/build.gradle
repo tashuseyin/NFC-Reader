@@ -1,9 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'androidx.navigation.safeargs.kotlin'
     id 'kotlin-kapt'
-    id 'kotlin-parcelize'
 }
 
 android {
@@ -64,15 +62,6 @@ dependencies {
     implementation 'androidx.camera:camera-camera2:1.1.0-beta03'
 
 
-    // Room
-    implementation 'androidx.room:room-runtime:2.4.2'
-    kapt 'androidx.room:room-compiler:2.4.2'
-    implementation 'androidx.room:room-ktx:2.4.2'
-
-    // Navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
-
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
@@ -89,4 +78,19 @@ dependencies {
 
     // Dexter
     implementation 'com.karumi:dexter:6.2.3'
+
+    //OKHttp
+    implementation 'com.squareup.okhttp3:okhttp:4.4.0'
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:4.4.0"
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.4.0'
+
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+
+    //RX
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
+
 }
