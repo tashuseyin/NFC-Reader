@@ -8,6 +8,7 @@ import android.util.Log
 import com.example.nfc.model.AdditionalPersonDetails
 import com.example.nfc.model.Passport
 import com.example.nfc.model.PersonDetails
+import com.example.nfc.util.DateUtil
 import com.example.nfc.util.PassportNfcUtils
 import ercanduman.cardreader.data.AdditionalDocumentDetails
 import io.reactivex.Single
@@ -59,8 +60,8 @@ class NFCDocumentTag {
                 if (passportNFC.dg1File != null) {
                     val mrzInfo = (passportNFC.dg1File as DG1File).mrzInfo
                     val personDetails = PersonDetails()
-                    personDetails.dateOfBirth = mrzInfo.dateOfBirth
-                    personDetails.dateOfExpiry = mrzInfo.dateOfExpiry
+                    personDetails.dateOfBirth = DateUtil.convertFromMrzDate(mrzInfo.dateOfBirth)
+                    personDetails.dateOfExpiry = DateUtil.convertFromMrzDate(mrzInfo.dateOfExpiry)
                     personDetails.documentCode = mrzInfo.documentCode
                     personDetails.documentNumber = mrzInfo.documentNumber
                     personDetails.optionalData1 = mrzInfo.optionalData1

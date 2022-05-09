@@ -29,4 +29,5 @@
     <string name="the_passport_chip_and_content_are_valid">The passport chip and content are valid</string>
     <string name="tc_kimlik">TÜRKİYE CUMHURİYETİ KİMLİK KARTI</string>
     <string name="republic">REPUBLIC OF TURKEY IDENTITY CARD</string>
+    <string name="mrz_onaylandi">MRZ ONAYLANDI</string>
 </resources>

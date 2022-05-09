@@ -14,7 +14,7 @@ class PassportDetailsFragment : Fragment() {
 
     private var _binding: FragmentPassportDetailsBinding? = null
     private val binding get() = _binding!!
-    private var passport: Passport? = null
+    var passport: Passport? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +33,8 @@ class PassportDetailsFragment : Fragment() {
         }
 
         setParameterPagerAdapter()
+
+        setViewData(passport)
     }
 
     private fun setParameterPagerAdapter() {
@@ -48,6 +50,7 @@ class PassportDetailsFragment : Fragment() {
 
 
         val adapter = PagerAdapter(
+            passport!!,
             fragments,
             requireActivity()
         )
@@ -67,4 +70,24 @@ class PassportDetailsFragment : Fragment() {
             return myFragment
         }
     }
+
+
+    private fun setViewData(passport: Passport?) {
+
+        if (passport!!.face != null) {
+            binding.userImage.setImageBitmap(passport.face)
+        } else if (passport.portrait != null) {
+            binding.userImage.setImageBitmap(passport.portrait)
+        }
+
+        val personDetails = passport.personDetails
+        if (personDetails != null) {
+            val surname = personDetails.primaryIdentifier!!.replace("<", "")
+            val name = personDetails.secondaryIdentifier!!.replace("<", "")
+            val fullName = "$name $surname"
+            binding.userName.text = fullName
+            binding.userGender.text = personDetails.gender!!.name
+        }
+    }
+
 }
