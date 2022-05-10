@@ -18,7 +18,7 @@ import org.jmrtd.lds.icao.MRZInfo
 
 class NfcActivity : FragmentActivity(), NfcFragment.NfcFragmentListener {
     private lateinit var binding: ActivityNfcBinding
-    private var mrzInfo: MRZInfo? = null
+    var mrzInfo: MRZInfo? = null
     private var nfcAdapter: NfcAdapter? = null
     private var pendingIntent: PendingIntent? = null
 
