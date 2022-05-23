@@ -55,7 +55,6 @@ class NfcFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val arguments = arguments
         if (arguments!!.containsKey(Constant.MRZ_RESULT)) {
             mrzInfo = arguments.getSerializable(Constant.MRZ_RESULT) as MRZInfo
