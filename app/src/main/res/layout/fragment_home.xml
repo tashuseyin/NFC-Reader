@@ -126,7 +126,7 @@
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/image"
-                android:src="@drawable/ic_passport"
+                android:src="@drawable/ic_credit_card"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -135,7 +135,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="@string/kimlik_kart"
+                android:text="@string/kredi_kart"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"

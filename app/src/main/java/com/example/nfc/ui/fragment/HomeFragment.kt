@@ -13,6 +13,7 @@ import com.example.nfc.common.Constant
 import com.example.nfc.databinding.FragmentHomeBinding
 import com.example.nfc.model.DocType
 import com.example.nfc.ui.activities.CaptureActivity
+import com.example.nfc.ui.activities.CreditCardActivity
 
 
 class HomeFragment : Fragment() {
@@ -43,6 +44,9 @@ class HomeFragment : Fragment() {
             constraintPasaport.setOnClickListener {
                 docType = DocType.PASSPORT
                 requestPermissionForCamera()
+            }
+            constraintCredit.setOnClickListener {
+                startActivity(Intent(context, CreditCardActivity::class.java))
             }
         }
     }

@@ -3,10 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Monster/AndroidStudioProjects/NFC-Reader/app/src/main/res/drawable/card_bg.xml" value="0.2555" />
+        <entry key="..\:/Users/Monster/AndroidStudioProjects/NFC-Reader/app/src/main/res/layout/activity_capture.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/Monster/AndroidStudioProjects/NFC-Reader/app/src/main/res/layout/activity_credit_card.xml" value="0.3625" />
+        <entry key="..\:/Users/Monster/AndroidStudioProjects/NFC-Reader/app/src/main/res/layout/activity_credit_card_result.xml" value="0.3625" />
         <entry key="..\:/Users/Monster/AndroidStudioProjects/NFC-Reader/app/src/main/res/layout/activity_main.xml" value="0.3625" />
         <entry key="..\:/Users/Monster/AndroidStudioProjects/NFC-Reader/app/src/main/res/layout/activity_nfc.xml" value="0.3625" />
+        <entry key="..\:/Users/Monster/AndroidStudioProjects/NFC-Reader/app/src/main/res/layout/content_credit_card_result.xml" value="0.3625" />
+        <entry key="..\:/Users/Monster/AndroidStudioProjects/NFC-Reader/app/src/main/res/layout/custom_dialog.xml" value="0.3625" />
+        <entry key="..\:/Users/Monster/AndroidStudioProjects/NFC-Reader/app/src/main/res/layout/fragment_credit_card_reader.xml" value="0.3625" />
         <entry key="..\:/Users/Monster/AndroidStudioProjects/NFC-Reader/app/src/main/res/layout/fragment_home.xml" value="0.3625" />
         <entry key="..\:/Users/Monster/AndroidStudioProjects/NFC-Reader/app/src/main/res/layout/fragment_nfc.xml" value="0.3625" />
+        <entry key="..\:/Users/Monster/AndroidStudioProjects/NFC-Reader/app/src/main/res/layout/fragment_nfc_credit_card.xml" value="0.3625" />
         <entry key="..\:/Users/Monster/AndroidStudioProjects/NFC-Reader/app/src/main/res/menu/menu.xml" value="0.3625" />
         <entry key="..\:/Users/Monster/AndroidStudioProjects/NFC/app/src/main/res/drawable-v24/border_background.xml" value="0.341" />
         <entry key="..\:/Users/Monster/AndroidStudioProjects/NFC/app/src/main/res/drawable-v24/message_bg.xml" value="0.3215" />

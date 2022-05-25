@@ -23,4 +23,8 @@
         <item name="cornerSize">10%</item>
     </style>
 
+    <style name="Theme.NFC.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.NFC.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

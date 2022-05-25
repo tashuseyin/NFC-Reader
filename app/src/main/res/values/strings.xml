@@ -30,4 +30,9 @@
     <string name="tc_kimlik">TÜRKİYE CUMHURİYETİ KİMLİK KARTI</string>
     <string name="republic">REPUBLIC OF TURKEY IDENTITY CARD</string>
     <string name="mrz_onaylandi">MRZ ONAYLANDI</string>
+    <string name="snack_unknown_bank_card">This is unknown bank card. Please, go to my github repo!</string>
+    <string name="snack_doNotMoveCard">Please do not move card, try again !</string>
+    <string name="snack_unknownEmv">Unknown EMV card</string>
+    <string name="snack_lockedNfcCard">NFC is locked on this card.</string>
+    <string name="title_activity_credit_card_result">CreditCardResultActivity</string>
 </resources>
